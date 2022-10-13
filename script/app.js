@@ -1,3 +1,72 @@
+let sunriseElement
+let sunsetElement
+let locationElement
+
+let sunElement
+let timeLeftElement
+
+let totalTime= 0
+
+//PLACE SUN ON LEFT EN TOP POSITION
+//BASED ON TOTAL TIME AND CURRENT TIME
+const placeSun = (sunrise) =>{
+	const now = new Date()
+	const sunriseDate = new Date(sunrise*1000)
+	
+	const minutesLeft = now.getHours()*60 +
+	now.getMinutes() -
+	(sunriseDate)
+
+	const sunLeftPosition = 50
+	const sunBottomPosition = 50
+
+	sunElement.style.left = `${sunLeftPosition}%`
+	sunElement.style.bottom = `${sunBottomPosition}%`
+}
+
+
+const updateTimeAndTimeLeft = (timeLeftTimeStamp) => {
+	document.querySelector('.js-sun').dataset.time =
+	new Date().toLocaleTimeString([], {
+		hour: '2-digit',
+		minute: '2-digit',
+	});
+  };
+
+const setDOMElements = () =>{
+	sunriseElement = document.querySelector(".js-sunrise");
+	sunsetElement = document.querySelector(".js-sunset");
+	locationElement = document.querySelector(".js-location");
+	// console.log(locationElement);
+
+	sunElement = document.querySelector(".js-sun")
+	timeLeftElement = document.querySelector(".js-time-left")
+
+	if(
+		!sunriseElement ||
+		!sunsetElement ||
+		!locationElement ||
+		!sunElement ||
+		!timeLeftElement
+	){
+		throw new Error('DOM elements not found')
+	}
+}
+
+const makeReadableTimeFormatFromTimestamp = (timestamp) => {
+	return new Date(timestamp*1000).toLocaleTimeString([], {
+		hour: '2-digit',
+		minute: '2-digit',
+	})
+}
+
+const setLocationData = (city) =>{
+	sunriseElement.innerText = _parseMillisecondsIntoReadableTime(city.sunrise);
+	sunsetElement.innerText = _parseMillisecondsIntoReadableTime(city.sunset);
+	locationElement.innerText = `${city.name}, ${city.country}`
+}
+
+
 // _ = helper functions
 function _parseMillisecondsIntoReadableTime(timestamp) {
 	//Get hours from milliseconds
@@ -38,14 +107,32 @@ let showResult = queryResponse => {
 	// Geef deze functie de periode tussen sunrise en sunset mee en het tijdstip van sunrise.
 };
 
-// 2 Aan de hand van een longitude en latitude gaan we de yahoo wheater API ophalen.
-let getAPI = (lat, lon) => {
-	// Eerst bouwen we onze url op
-	// Met de fetch API proberen we de data op te halen.
-	// Als dat gelukt is, gaan we naar onze showResult functie.
-};
 
-document.addEventListener('DOMContentLoaded', function() {
-	// 1 We will query the API with longitude and latitude.
-	getAPI(50.8027841, 3.2097454);
-});
+
+
+const getData = (endpoint) => {
+	return fetch(endpoint).then((r) => r.json()).catch((e) => console.error(e))
+}
+
+document.addEventListener('DOMContentLoaded', async function(){
+	let lat = 50.8027841
+	let lng = 3.2097454
+
+
+
+	const endpoint = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=5dc67a54b6468509dd1076159f7b3c38&units=metric&lang=nl&cnt=1`
+	
+
+	setDOMElements();
+	placeSun();
+
+	const {city} = await getData(endpoint)
+
+	setLocationData(city);
+
+	totalTime = city.sunset - city.sunrise
+
+	updateTimeAndTimeLeft(makeReadableTimeFormatFromTimestamp(city.sunset))
+
+	console.log(city)
+})
