@@ -317,10 +317,20 @@ input::placeholder {
 .c-horizon__line{
     border-top: 1px solid var(--global-dark-blue);
     padding-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
 }
 .c-horizon__time{
+    font-size: .75rem;
+    font-weight: 500;
 }
-
+.c-horizon__moon{
+    
+}
+.c-horizon__moon::before{
+    content: attr(data-time);
+    font-size: .75rem;
+}
 /*
     Component: Logo
     ---
