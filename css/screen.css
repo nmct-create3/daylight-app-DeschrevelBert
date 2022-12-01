@@ -21,6 +21,26 @@
     --dark-text-color: var(--global-white);
 
     /* opacity */
+    --global-opacity-95: 95%;
+    --global-opacity-90: 90%;
+    --global-opacity-85: 85%;
+    --global-opacity-80: 80%;
+    --global-opacity-75: 75%;
+    --global-opacity-70: 70%;
+    --global-opacity-65: 65%;
+    --global-opacity-60: 60%;
+    --global-opacity-55: 55%;
+    --global-opacity-50: 50%;
+    --global-opacity-45: 45%;
+    --global-opacity-40: 40%;
+    --global-opacity-35: 35%;
+    --global-opacity-30: 30%;
+    --global-opacity-25: 25%;
+    --global-opacity-20: 20%;
+    --global-opacity-15: 15%;
+    --global-opacity-10: 10%;
+    --global-opacity-5: 5%;
+    --global-opacity-0: 0;
 
     /* transitions */
 }
@@ -255,12 +275,50 @@ input::placeholder {
 /*------------------------------------*\
 #COMPONENTS
 \*------------------------------------*/
-.c-app{
-    max-width: 25rem;
+.c-main{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+/*     
     min-height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: center;  
+    flex-direction: column;
+    max-width: 35rem;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center; */
+}
+.c-app{
+    display: flex;
+    flex-direction: column;
+    max-width: 35rem;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    grid-column: 2;
+    grid-row: 2;
+}
+.c-app__summary{
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+.c-app__summary--time-left{
+    font-weight: bold;
+    color: var(--global-yellow);
+}
+.c-moon{
+    fill: var(--global-dark-blue);
+    max-width: 2rem;
+    max-height: 2rem;
+    padding: 0.25rem;
+    background-color: var(--global-dark-blue);
+    border-radius: 100%;
+}
+.c-horizon__line{
+    border-top: 1px solid var(--global-dark-blue);
+    padding-bottom: 1rem;
+}
+.c-horizon__time{
 }
 
 /*
@@ -270,7 +328,13 @@ input::placeholder {
 */
 
 .c-logo {
-
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    grid-column: 1;
+    margin: 0;
+    padding-left: 2rem;
+    margin-top: -5rem;
 }
 
 /*
@@ -280,7 +344,7 @@ input::placeholder {
 */
 
 .c-sun {
-
+    display: none;
 }
 
 .c-logo .c-sun {
