@@ -45,7 +45,18 @@ let getAPI = (lat, lon) => {
 	// Als dat gelukt is, gaan we naar onze showResult functie.
 };
 
+const Time = function(){
+
+	const timeDisplay = document.querySelector('.c-time');
+	const dateString = new Date().toLocaleString();
+	const formattedString = dateString.replace(", ", " - ");
+	timeDisplay.textContent = formattedString;
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
 	// 1 We will query the API with longitude and latitude.
 	getAPI(50.8027841, 3.2097454);
+	Time();
+	setInterval(Time, 1000);
 });
